@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
+use App\Models\Employee;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Department::factory(10)->create()->each(function ($department) {
+            $department->employees()->saveMany(Employee::factory(20)->create([
+                'department_id' => $department->id,
+            ]));
+        });
+
     }
 }
