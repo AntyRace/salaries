@@ -17,6 +17,7 @@ class CreateSalariesTable extends Migration
             $table->id();
             $table->foreignId('employee_id');
             $table->unsignedInteger('salary');
+            $table->unsignedInteger('perk');
             $table->timestamp('salary_date');
             $table->timestamps();
             $table->foreign('employee_id')->references('id')->on('employees');

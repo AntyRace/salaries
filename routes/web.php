@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', function () {
-    return view('welcome');
+    // (new \App\Services\Salaries\Calculate)->handle();
+    // dd('end');
+    $employees = \App\Models\Employee::all();
+    return view('home/index', compact('employees'));
 });

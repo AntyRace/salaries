@@ -24,7 +24,7 @@ class EmployeeFactory extends Factory
         return [
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
-            'salary' => $this->faker->numberBetween(100, 200) * 10,
+            'salary' => $this->faker->numberBetween(1000, 2000) * 100,
             'employed_since' => $this->faker->dateTimeBetween($startDate = '-15 years', $endDate = '-1 year'),
         ];
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Department;
 use App\Models\Salary;
+use App\ValueObjects\Price;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +27,7 @@ class Employee extends Model
      *
      * @var array
      */
-    protected $with = ['department'];
+    protected $with = ['department', 'salaries'];
 
     /**
      * Define an inverse one-to-one or many relationship.
@@ -48,24 +49,46 @@ class Employee extends Model
         return $this->hasMany(Salary::class);
     }
 
+    public function getLastSalary()
+    {
+        return $this->salaries->last();
+    }
+
+    /**
+     * Salary as object
+     * @return \App\ValueObjects\Price
+     */
+    public function getBaseSalary(): Price
+    {
+        return new Price($this->salary ?? 0);
+    }
+
     /**
      * Get how many years employee works in company
      * @return int
      */
-    public function getYearsOfWork(Carbon $date = null): int
+    public function getYearsOfWork(): int
     {
-        $date = $date ?? Carbon::now()->startOfMonth();
-        return $date->diffInYears($this->employed_since);
+        return Carbon::now()->startOfMonth()->diffInYears($this->employed_since);
     }
 
+    /**
+     * Check if employee has salary for selected date
+     * @param  \Carbon\Carbon  $date
+     * @return boolean
+     */
     public function hasSalaryForDate(Carbon $date): bool
     {
-        return $this->salaries()->where('salary_date', $date)->count() > 0;
+        return $this->salaries->where('salary_date', $date)->count() > 0;
     }
 
+    /**
+     * Check if user doesn't have salary for selected date
+     * @param  \Carbon\Carbon $date
+     * @return bool
+     */
     public function doesntHaveSalaryForDate(Carbon $date): bool
     {
         return !$this->hasSalaryForDate($date);
     }
-
 }

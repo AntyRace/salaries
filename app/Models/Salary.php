@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\ValueObjects\Price;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,5 +15,23 @@ class Salary extends Model
      *
      * @var array
      */
-    protected $fillable = ['employee_id', 'salary', 'salary_date'];
+    protected $fillable = ['employee_id', 'salary', 'perk', 'salary_date'];
+
+    /**
+     * Salary as object
+     * @return \App\ValueObjects\Price
+     */
+    public function getMonthlySalary(): Price
+    {
+        return new Price($this->salary ?? 0);
+    }
+
+    /**
+     * Perk as object
+     * @return \App\ValueObjects\Price
+     */
+    public function getPerk(): Price
+    {
+        return new Price($this->perk ?? 0);
+    }
 }
