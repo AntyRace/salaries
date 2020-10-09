@@ -16,9 +16,9 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id');
-            $table->string('first_name', 128);
-            $table->string('last_name', 128);
-            $table->unsignedInteger('salary');
+            $table->string('first_name', 128)->index();
+            $table->string('last_name', 128)->index();
+            $table->unsignedInteger('salary')->index();
             $table->timestamp('employed_since');
             $table->timestamps();
             $table->foreign('department_id')->references('id')->on('departments');

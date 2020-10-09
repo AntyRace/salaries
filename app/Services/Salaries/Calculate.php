@@ -22,7 +22,7 @@ class Calculate
             if ($employee->doesntHaveSalaryForDate($date)) {
                 $result = (new SalaryPerk(new BaseSalary($employee)))->getAmount();
                 $employee->salaries()->create([
-                    'salary' => $result,
+                    'wage' => $result,
                     'perk' => $result - $employee->getBaseSalary()->getValue(),
                     'salary_date' => $date,
                 ]);

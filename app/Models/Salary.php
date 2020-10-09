@@ -15,7 +15,7 @@ class Salary extends Model
      *
      * @var array
      */
-    protected $fillable = ['employee_id', 'salary', 'perk', 'salary_date'];
+    protected $fillable = ['employee_id', 'wage', 'perk', 'salary_date'];
 
     /**
      * Salary as object
@@ -23,7 +23,7 @@ class Salary extends Model
      */
     public function getMonthlySalary(): Price
     {
-        return new Price($this->salary ?? 0);
+        return new Price($this->wage ?? 0);
     }
 
     /**

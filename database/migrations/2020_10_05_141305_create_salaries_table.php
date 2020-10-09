@@ -16,7 +16,7 @@ class CreateSalariesTable extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id');
-            $table->unsignedInteger('salary');
+            $table->unsignedInteger('wage');
             $table->unsignedInteger('perk');
             $table->timestamp('salary_date');
             $table->timestamps();

@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', function () {
-    // (new \App\Services\Salaries\Calculate)->handle();
-    // dd('end');
-    $employees = \App\Models\Employee::all();
-    return view('home/index', compact('employees'));
+Route::resource('/', \App\Http\Controllers\ReportsController::class, ['only' => ['index']]);
+Route::get('/generate_report', function () {
+    (new \App\Services\Salaries\Calculate)->handle();
+    echo "Report generated!";
 });

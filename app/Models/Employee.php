@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Department;
 use App\Models\Salary;
+use App\Traits\Filterable;
 use App\ValueObjects\Price;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,7 +50,11 @@ class Employee extends Model
         return $this->hasMany(Salary::class);
     }
 
-    public function getLastSalary()
+    /**
+     * Last salary
+     * @return \App\Models\Salary
+     */
+    public function getLastSalary():  ? Salary
     {
         return $this->salaries->last();
     }
@@ -58,7 +63,7 @@ class Employee extends Model
      * Salary as object
      * @return \App\ValueObjects\Price
      */
-    public function getBaseSalary(): Price
+    public function getBaseSalary() : Price
     {
         return new Price($this->salary ?? 0);
     }

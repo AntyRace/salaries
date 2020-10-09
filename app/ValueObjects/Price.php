@@ -37,5 +37,4 @@ class Price
     {
         return (string) $this->value;
     }
-
 }
